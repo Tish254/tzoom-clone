@@ -26,7 +26,7 @@ const MeetingTypeList = () => {
     "isScheduleMeeting" | "isJoiningMeeting" | "isInstantMeeting" | undefined
   >(undefined);
   const [values, setValues] = useState(initialValues);
-  const [callDetail, setCallDetail] = useState<Call>();
+  const [callDetails, setCallDetails] = useState<Call>();
   const client = useStreamVideoClient();
   const { user } = useUser();
   const { toast } = useToast();
@@ -52,7 +52,7 @@ const MeetingTypeList = () => {
           },
         },
       });
-      setCallDetail(call);
+      setCallDetails(call);
       if (!values.description) {
         router.push(`/meeting/${call.id}`);
       }
@@ -67,7 +67,7 @@ const MeetingTypeList = () => {
 
   if (!client || !user) return <Loader />;
 
-  const meetingLink = `${process.env.NEXT_PUBLIC_BASE_URL}/meeting/${callDetail?.id}`;
+  const meetingLink = `${process.env.NEXT_PUBLIC_BASE_URL}/meeting/${callDetails?.id}`;
 
   return (
     <section className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
@@ -99,7 +99,7 @@ const MeetingTypeList = () => {
         handleClick={() => router.push("/recordings")}
       />
 
-      {!callDetail ? (
+      {!callDetails ? (
         <MeetingModal
           isOpen={meetingState === "isScheduleMeeting"}
           onClose={() => setMeetingState(undefined)}
